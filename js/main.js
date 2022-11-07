@@ -5,5 +5,3 @@ import { makeBigPictures } from './thumbnails.js';
 const data = getPhotos();
 makeBigPictures(data);
 renderUploadForm();
-
-
