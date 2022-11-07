@@ -1,5 +1,5 @@
 import { getRandomPositiveInteger } from './util.js';
-import {MAX_COUNT_PHOTOS, MESSAGE,DESCRIPTION, NAMES, COUNT_COMMENTS, CountAvatar, CountLike} from './consts.js';
+import {MAX_COUNT_PHOTOS, MESSAGE,DESCRIPTION, NAMES, CountComment, CountAvatar, CountLike} from './consts.js';
 
 const createComment = (id) => ({
   id,
@@ -13,7 +13,7 @@ const createUserData = (id) => ({
   url: `photos/${id}.jpg`,
   description: DESCRIPTION[getRandomPositiveInteger(0, DESCRIPTION.length - 1)],
   likes: getRandomPositiveInteger(CountLike.MIN, CountLike.MAX),
-  comments: Array.from({length:getRandomPositiveInteger(1, COUNT_COMMENTS)}).map((_,index) => createComment(index + 1))
+  comments: Array.from({length:getRandomPositiveInteger(CountComment.MIN, CountComment.MAX)}).map((_,index) => createComment(index + 1))
 });
 
 const getPhotos = () => Array.from({length: MAX_COUNT_PHOTOS}).map((_, index) => createUserData(index + 1));

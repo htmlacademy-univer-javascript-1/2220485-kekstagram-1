@@ -1,5 +1,4 @@
 const MAX_COUNT_PHOTOS = 25;
-const COUNT_COMMENTS = 8;
 const MAX_SYMBOLS = 20;
 const MAX_HASHTAGS = 5;
 
@@ -37,6 +36,11 @@ const CountAvatar = {
   MAX: 6,
 };
 
+const CountComment = {
+  MIN: 1,
+  MAX: 8,
+};
+
 const ErrorMessage = {
   SEPARETED_BY_SPACES: 'Хэш-теги разделяются пробелами',
   START_WITH: 'Хэш-тег должен начинаться с символа #',
@@ -47,5 +51,5 @@ const ErrorMessage = {
   COMMENT_MAX_LENGTH: 'Длина комментария не может составлять больше 140 символов'
 };
 
-export {MAX_COUNT_PHOTOS, MESSAGE,DESCRIPTION, NAMES, CountAvatar, CountLike, COUNT_COMMENTS, MAX_SYMBOLS, MAX_HASHTAGS, ErrorMessage};
+export {MAX_COUNT_PHOTOS, MESSAGE,DESCRIPTION, NAMES, CountAvatar, CountLike, CountComment, MAX_SYMBOLS, MAX_HASHTAGS, ErrorMessage};
 
