@@ -34,5 +34,5 @@ const renderUploadForm = () => {
   validateForm();
 };
 
-export{renderUploadForm};
+export {renderUploadForm};
 

@@ -1,9 +1,9 @@
-import { createThumbnails } from './thumbnails.js';
 import { getPhotos } from './data.js';
 import {renderUploadForm} from './form.js';
+import { makeBigPictures } from './thumbnails.js';
 
 const data = getPhotos();
-createThumbnails(data);
+makeBigPictures(data);
 renderUploadForm();
 
 
