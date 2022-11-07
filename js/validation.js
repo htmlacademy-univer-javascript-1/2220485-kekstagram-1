@@ -1,17 +1,16 @@
-const MAX_SYMBOLS = 20;
-const MAX_HASHTAGS = 5;
+import { MAX_HASHTAGS, MAX_SYMBOLS, ErrorMessage} from './consts.js';
+
+const submitButton = document.querySelector('.img-upload__submit');
 
 const form = document.querySelector('.img-upload__form');
-const submitButton = document.querySelector('.img-upload__submit');
+const inputHashtag = form.querySelector('.text__hashtags');
+const inputComment = form.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error-text'
 });
-
-const inputHashtag = document.querySelector('.text__hashtags');
-const inputComments = document.querySelector('.text__description');
 
 let errorMessage = '';
 
@@ -20,7 +19,7 @@ const error = () => errorMessage;
 const hashtagHandler = (value) => {
   const inputText = value.toLowerCase().trim();
 
-  if(!inputText) {
+  if (!inputText) {
     return true;
   }
 
@@ -33,27 +32,27 @@ const hashtagHandler = (value) => {
   const rules = [
     {
       check: inputArray.some((item) => item.indexOf('#', 1) >= 1),
-      error: 'Хэш-теги разделяются пробелами',
+      error: ErrorMessage.SEPARETED_BY_SPACES,
     },
     {
       check: inputArray.some((item) => item[0] !== '#'),
-      error: 'Хэш-тег должен начинаться с символа #',
+      error: ErrorMessage.START_WITH,
     },
     {
       check: inputArray.some((item, num, arr) => arr.includes(item, num + 1)),
-      error: 'Хэш-теги не должны повторяться',
+      error: ErrorMessage.NO_REPEAT,
     },
     {
       check: inputArray.some((item) => item.length > MAX_SYMBOLS),
-      error: `Максимальная длина одного хэш-тега ${MAX_SYMBOLS} символов, включая решётку`,
+      error: ErrorMessage.HASHTAG_MAX_LENGTH,
     },
     {
       check: inputArray.length > MAX_HASHTAGS,
-      error: `Нельзя указывать больше ${MAX_HASHTAGS} хэш-тегов`,
+      error: ErrorMessage.MAX_COUNT_HASHTAG,
     },
     {
       check: inputArray.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
-      error: 'Хэш-тег содержит недопустимые символы',
+      error: ErrorMessage.UNACCEPTABLE_SYMBOLS,
     },
   ];
 
@@ -67,11 +66,7 @@ const hashtagHandler = (value) => {
   });
 };
 
-pristine.addValidator(inputHashtag, hashtagHandler, error);
-pristine.addValidator(inputComments, (value) => value.length <= 140, 'Длина комментария не может составлять больше 140 символов');
-
-//если форма заполнена не по правилам, то кнопка "опубликовать" недоступна
-const onInput = () => {
+const buttonAdjustment = () => {
   if (pristine.validate()) {
     submitButton.disabled = false;
   }
@@ -80,8 +75,22 @@ const onInput = () => {
   }
 };
 
-inputHashtag.addEventListener('input', onInput);
-inputComments.addEventListener('input', onInput);
+const validateForm = () => {
+  pristine.addValidator(inputHashtag, hashtagHandler, error);
+  pristine.addValidator(inputComment, (value) => value.length <= 140, ErrorMessage.COMMENT_MAX_LENGTH);
+  buttonAdjustment();
+};
+
+const onInputHashtag = () => {
+  buttonAdjustment();
+};
+
+const onInputComment = () => {
+  buttonAdjustment();
+};
+
+inputHashtag.addEventListener('input', onInputHashtag);
+inputComment.addEventListener('input', onInputComment);
 
 const stopPropagation = (evt) => {
   if (evt.key === 'Escape') {
@@ -90,4 +99,6 @@ const stopPropagation = (evt) => {
 };
 
 inputHashtag.addEventListener('keydown', stopPropagation);
-inputComments.addEventListener('keydown', stopPropagation);
+inputComment.addEventListener('keydown', stopPropagation);
+
+export{validateForm};

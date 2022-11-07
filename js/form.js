@@ -1,4 +1,5 @@
-import './validation.js';
+import {validateForm} from './validation.js';
+
 const uploadFileButton = document.querySelector('#upload-file');
 const editingForm = document.querySelector('.img-upload__overlay');
 const closeEditingFormButton = document.querySelector('.img-upload__cancel');
@@ -24,8 +25,14 @@ const onEscKeyDown = (evt) => {
 
 closeEditingFormButton.addEventListener('click', closeEditingForm);
 
-uploadFileButton.addEventListener('change', () => {
-  editingForm.classList.remove('hidden');
-  body.classList.add('modal-open');
-  document.addEventListener('keydown', onEscKeyDown);
-});
+const renderUploadForm = () => {
+  uploadFileButton.addEventListener('change', () => {
+    editingForm.classList.remove('hidden');
+    body.classList.add('modal-open');
+    document.addEventListener('keydown', onEscKeyDown);
+  });
+  validateForm();
+};
+
+export{renderUploadForm};
+
