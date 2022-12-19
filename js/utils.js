@@ -4,6 +4,8 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const checkStringLength = (string, length) => string.length <= length;
 
+const shuffleArray = (arr) => arr.map((a) => [Math.random(), a]).sort((a, b) => a[0] - b[0]).map((a) => a[1]);
+
 function debounce (callback, timeoutDelay = TIMEOUT_DELAY) {
   let timeoutId;
 
@@ -26,7 +28,5 @@ function throttle (callback, delayBetweenFrames) {
     }
   };
 }
-
-const shuffleArray = (arr) => arr.map((a) => [Math.random(), a]).sort((a, b) => a[0] - b[0]).map((a) => a[1]);
 
 export { isEscapeKey, checkStringLength, shuffleArray, debounce, throttle};

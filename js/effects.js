@@ -1,11 +1,8 @@
 const effectsList = document.querySelector('.effects__list');
-const sliderWrapper = document.querySelector('.img-upload__effect-level');
-sliderWrapper.classList.add('hidden');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const slider = document.querySelector('.effect-level__slider');
-const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
-const effects = {
+const Effect = {
   chrome: {
     filter: 'grayscale',
     units: '',
@@ -89,23 +86,4 @@ const initEffects = () => {
   });
 };
 
-const onFilterButtonChange = (evt) => {
-  const evtHandler = evt.target.value;
-  if (evtHandler === 'none') {
-    sliderWrapper.classList.add('hidden');
-    imgPreview.style.filter = 'none';
-  }
-  else {
-    sliderWrapper.classList.remove('hidden');
-    imgPreview.removeAttribute('class');
-    imgPreview.classList.add(`effects__preview--${evtHandler}`);
-    slider.noUiSlider.updateOptions(effects[evtHandler].options);
-    slider.noUiSlider.on('update', () => {
-      effectLevelValue.value = slider.noUiSlider.get();
-      imgPreview.style.filter = `${effects[evtHandler].filter}(${effectLevelValue.value}${effects[evtHandler].units})`;
-    });
-  }
-};
-
-export { onFilterButtonChange, initEffects, effectsList };
-
+export { initEffects, effectsList, Effect, effectLevelValue, slider};

@@ -15,9 +15,9 @@ const pristine = new Pristine(form, {
 
 let errorMessage = '';
 
-const error = () => errorMessage;
+const getError = () => errorMessage;
 
-const hashtagHandler = (value) => {
+const onHashtagInput = (value) => {
   const inputText = value.toLowerCase().trim();
 
   if (!inputText) {
@@ -67,37 +67,42 @@ const hashtagHandler = (value) => {
   });
 };
 
-const buttonAdjustment = () => {
+const allowFormSubmission = () => {
   submitButton.disabled = !pristine.validate();
 };
 
 const validateForm = () => {
-  pristine.addValidator(inputHashtag, hashtagHandler, error);
+  pristine.addValidator(inputHashtag, onHashtagInput, getError);
   pristine.addValidator(inputComment, (value) => checkStringLength(value, COMMENT_MAX_LENGTH), ErrorMessage.COMMENT_MAX_LENGTH);
-  buttonAdjustment();
+  allowFormSubmission();
 };
 
 const onInputHashtag = () => {
-  buttonAdjustment();
+  allowFormSubmission();
 };
 
 const onInputComment = () => {
-  buttonAdjustment();
+  allowFormSubmission();
 };
 
 inputHashtag.addEventListener('input', onInputHashtag);
 inputComment.addEventListener('input', onInputComment);
 
-inputHashtag.addEventListener('keydown', (evt) => {
+const destroyEscape = (evt) => {
   if (evt.key === 'Escape') {
     evt.stopPropagation();
   }
-});
+};
 
-inputComment.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    evt.stopPropagation();
-  }
-});
+const onInputHashtagKeydown = (evt) => {
+  destroyEscape(evt);
+};
 
-export { validateForm, buttonAdjustment, form };
+const onInputCommentKeydown = (evt) => {
+  destroyEscape(evt);
+};
+
+inputHashtag.addEventListener('keydown', onInputHashtagKeydown);
+inputComment.addEventListener('keydown', onInputCommentKeydown);
+
+export { validateForm, allowFormSubmission, form };

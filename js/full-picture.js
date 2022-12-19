@@ -9,7 +9,7 @@ const shownCommentsCount = document.querySelector('.social__comment-count');
 const commentsBtnLoader = document.querySelector('.comments-loader');
 
 let actualComments = [];
-let countRenderedComments  = DEFAULT_RENDERED_COMMENTS;
+let countRenderedComments = DEFAULT_RENDERED_COMMENTS;
 
 const getCommentTemplate = ({avatar, message, name}) => `<li class="social__comment">
   <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
@@ -31,7 +31,7 @@ const renderComments = () => {
   fullPictureCommentsList.insertAdjacentHTML('afterbegin', commentsTemplate);
 
   if (countRenderedComments >= actualComments.length) {
-    commentsBtnLoader.removeEventListener('click', onCommentsBtnLoader);
+    commentsBtnLoader.removeEventListener('click', onCommentsBtnLoaderClick);
     commentsBtnLoader.classList.add('hidden');
   }
 };
@@ -47,7 +47,7 @@ const initComments = (comments) => {
   }
 
   renderComments();
-  commentsBtnLoader.addEventListener('click', onCommentsBtnLoader);
+  commentsBtnLoader.addEventListener('click', onCommentsBtnLoaderClick);
 };
 
 const renderFullPicture = (picture) => {
@@ -61,10 +61,10 @@ const renderFullPicture = (picture) => {
 const closePicture = () => {
   body.classList.remove('modal-open');
   fullPicture.classList.add('hidden');
-  closeButton.removeEventListener('click', onCloseButton);
+  closeButton.removeEventListener('click', onCloseButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeyDown);
   commentsBtnLoader.classList.remove('hidden');
-  commentsBtnLoader.removeEventListener('click', onCommentsBtnLoader);
+  commentsBtnLoader.removeEventListener('click', onCommentsBtnLoaderClick);
   countRenderedComments = DEFAULT_RENDERED_COMMENTS;
 };
 
@@ -74,11 +74,11 @@ function onDocumentEscKeyDown(evt) {
   }
 }
 
-function onCloseButton() {
+function onCloseButtonClick() {
   closePicture();
 }
 
-function onCommentsBtnLoader() {
+function onCommentsBtnLoaderClick() {
   countRenderedComments += STEP_ADDED_COMMENTS;
   renderComments();
 }
@@ -89,7 +89,7 @@ const openFullPicture = (element) => {
 
   renderFullPicture(element);
 
-  closeButton.addEventListener('click', onCloseButton);
+  closeButton.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentEscKeyDown);
 };
 

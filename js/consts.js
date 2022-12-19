@@ -3,6 +3,10 @@ export const MAX_HASHTAGS = 5;
 export const COMMENT_MAX_LENGTH = 140;
 export const TIMEOUT_DELAY = 500;
 export const MAX_COUNT_RANDOM_PHOTOS = 10;
+export const ALERT_SHOW_TIME = 5000;
+export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+export const DEFAULT_RENDERED_COMMENTS = 5;
+export const STEP_ADDED_COMMENTS = 5;
 
 export const ErrorMessage = {
   SEPARETED_BY_SPACES: 'Хэш-теги разделяются пробелами',
@@ -14,9 +18,6 @@ export const ErrorMessage = {
   COMMENT_MAX_LENGTH: 'Длина комментария не может составлять больше 140 символов'
 };
 
-export const DEFAULT_RENDERED_COMMENTS = 5;
-export const STEP_ADDED_COMMENTS = 5;
-
 export const Scale = {
   MIN: 25,
   STEP: 25,
@@ -27,5 +28,3 @@ export const Url = {
   'GET': 'https://26.javascript.pages.academy/kekstagram/data',
   'POST': 'https://26.javascript.pages.academy/kekstagram'
 };
-
-export const ALERT_SHOW_TIME = 5000;
